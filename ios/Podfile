@@ -77,6 +77,12 @@ target 'CollectionBook' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
+  pod 'RNCMaskedView', :path => '../node_modules/@react-native-community/masked-view'
+
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   target 'CollectionBookTests' do
     inherit! :complete
     # Pods for testing
