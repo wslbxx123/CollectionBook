@@ -8,6 +8,7 @@ import {
     Image,
     TextInput
   } from 'react-native';
+import Hightlighter from 'react-native-highlight-words';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { getBookmarks } from '../actions/bookmarkActions';
 
@@ -15,6 +16,7 @@ export function BookmarkSearch(props) {
     var bookmarks = useSelector(state => state.bookmarks.data, shallowEqual);
     const dispatch = useDispatch();
     const [filteredBookmarks, setFilteredBookmarks] = useState([]);
+    const [keyword, setKeyword] = useState('');
 
     useEffect(() => {
         getBookmarks(dispatch);
@@ -31,6 +33,7 @@ export function BookmarkSearch(props) {
         setFilteredBookmarks(bookmarks.filter(bookmark => 
             bookmark.title.toLowerCase().includes(text.toLowerCase() ||
             bookmark.tag.toLowerCase().includes(text.toLowerCase()) )));
+        setKeyword(text);
     }
 
     return (
@@ -46,9 +49,13 @@ export function BookmarkSearch(props) {
                         style={styles.itemContiner}
                         onPress={() => onPressBookmark(bookmark)}>
                         <View>
-                            <Text style={styles.itemTitle} numberOfLines={1}>{bookmark.title}</Text>
+                            <Hightlighter style={styles.itemTitle}
+                                highlightStyle={{backgroundColor: 'yellow'}}
+                                textToHighlight={bookmark.title} searchWords={[keyword]}/>
                             <View style={styles.itemTagView}>
-                                <Text style={styles.itemTag}>{bookmark.tag}</Text>
+                                <Hightlighter style={styles.itemTag}
+                                    highlightStyle={{backgroundColor: 'yellow'}}
+                                    textToHighlight={bookmark.tag} searchWords={[keyword]}/>
                             </View>
                         </View>
                     </TouchableOpacity>
