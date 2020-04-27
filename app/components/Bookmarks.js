@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     ScrollView,
     Text,
@@ -6,7 +6,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    Image
+    Image,
+    RefreshControl
   } from 'react-native';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { getBookmarks } from '../actions/bookmarkActions';
@@ -14,6 +15,7 @@ import { getBookmarks } from '../actions/bookmarkActions';
 export function Bookmarks(props) {
     const bookmarks = useSelector(state => state.bookmarks.data, shallowEqual);
     const dispatch = useDispatch();
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         getBookmarks(dispatch);
@@ -34,6 +36,13 @@ export function Bookmarks(props) {
         props.navigation.navigate('BookmarkAdd');
     }
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+
+        getBookmarks(dispatch).then(() => 
+            setRefreshing(false));
+    }, [refreshing]);
+
     return (
         <View style={styles.mainView}>
             <TouchableWithoutFeedback onPress={onPressSearch}>
@@ -43,7 +52,11 @@ export function Bookmarks(props) {
                     <Text style={styles.searchText}>Search By Title, Tag or Content</Text>
                 </View>
             </TouchableWithoutFeedback>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={styles.scrollView}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing}
+                        onRefresh={onRefresh} />
+                }>
                 {bookmarks.map(bookmark => (
                     <TouchableOpacity key={bookmark.id}
                         style={styles.itemContiner}

@@ -6,6 +6,7 @@ export const GET_BOOKMARKS_ERROR = 'GET_BOOKMARKS_ERROR';
 export const ADD_BOOKMARK_REQUEST = 'ADD_BOOKMARK_REQUEST';
 export const ADD_BOOKMARK_SUCCESS = 'ADD_BOOKMARK_SUCCESS';
 export const ADD_BOOKMARK_ERROR = 'ADD_BOOKMARK_ERROR';
+const COLLECTION_API_ADDRESS = 'http://10.72.64.104';
 
 const getBookmarksSuccess = payload => ({
     type: GET_BOOKMARKS_SUCCESS,
@@ -29,7 +30,7 @@ const addBookmarkError = payload => ({
 
 export const getBookmarks = (dispatch) => {
     dispatch({type: GET_BOOKMARKS_REQUEST});
-    return axios.get('http://10.22.19.70/CollectionBookAPI/api/bookmark/GetBookmarks').then(res => {
+    return axios.get(`${COLLECTION_API_ADDRESS}/CollectionBookAPI/api/bookmark/GetBookmarks`).then(res => {
         const response = res.data;
         dispatch(getBookmarksSuccess(response));
     }).catch(error => {
@@ -40,7 +41,7 @@ export const getBookmarks = (dispatch) => {
 
 export const addBookmark = (dispatch, bookmark) => {
     dispatch({type: ADD_BOOKMARK_REQUEST});
-    return axios.post('http://10.22.19.70/CollectionBookAPI/api/bookmark/AddBookmark', bookmark).then(res => {
+    return axios.post(`${COLLECTION_API_ADDRESS}/CollectionBookAPI/api/bookmark/AddBookmark`, bookmark).then(res => {
         const response = res.data;
         dispatch(addBookmarkSuccess(response));
     }).catch(error => {

@@ -49,7 +49,7 @@ export default (state=INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 hasError: false,
-                data: [...state.data, action.payload]
+                data: [action.payload, ...state.data]
             };
 
         case ADD_BOOKMARK_ERROR:
