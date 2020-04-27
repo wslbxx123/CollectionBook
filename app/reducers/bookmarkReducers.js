@@ -1,7 +1,10 @@
 import {
     GET_BOOKMARKS_REQUEST,
     GET_BOOKMARKS_SUCCESS,
-    GET_BOOKMARKS_ERROR
+    GET_BOOKMARKS_ERROR,
+    ADD_BOOKMARK_ERROR,
+    ADD_BOOKMARK_REQUEST,
+    ADD_BOOKMARK_SUCCESS
 } from '../actions/bookmarkActions';
 
 const INITIAL_STATE = {
@@ -35,6 +38,27 @@ export default (state=INITIAL_STATE, action) => {
                 error: action.payload
             };
 
+        case ADD_BOOKMARK_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+            
+        case ADD_BOOKMARK_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                hasError: false,
+                data: [...state.data, action.payload]
+            };
+
+        case ADD_BOOKMARK_ERROR:
+            return {
+                ...state,
+                loading: false,
+                hasError: true,
+                error: action.payload
+            };
         default:
             return state;
     }

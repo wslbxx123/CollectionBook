@@ -50,11 +50,11 @@ export function BookmarkSearch(props) {
                         onPress={() => onPressBookmark(bookmark)}>
                         <View>
                             <Hightlighter style={styles.itemTitle}
-                                highlightStyle={{backgroundColor: 'yellow'}}
+                                highlightStyle={styles.hightlightText}
                                 textToHighlight={bookmark.title} searchWords={[keyword]}/>
                             <View style={styles.itemTagView}>
                                 <Hightlighter style={styles.itemTag}
-                                    highlightStyle={{backgroundColor: 'yellow'}}
+                                    highlightStyle={styles.hightlightText}
                                     textToHighlight={bookmark.tag} searchWords={[keyword]}/>
                             </View>
                         </View>
@@ -72,6 +72,9 @@ const styles = StyleSheet.create({
         paddingRight: 20,
         paddingTop: 20,
         paddingBottom: 20
+    },
+    hightlightText: {
+        color: '#ffb584'
     },
     searchView: {
         backgroundColor: '#FFFFFF',

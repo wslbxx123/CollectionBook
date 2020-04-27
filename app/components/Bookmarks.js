@@ -26,8 +26,12 @@ export function Bookmarks(props) {
         });
     }
     
-    function onPressSearch(bookmark) {
+    function onPressSearch() {
         props.navigation.navigate('BookmarkSearch');
+    }
+
+    function onPressAdd() {
+        props.navigation.navigate('BookmarkAdd');
     }
 
     return (
@@ -53,6 +57,9 @@ export function Bookmarks(props) {
                     </TouchableOpacity>
                 ))}
             </ScrollView>
+            <TouchableOpacity onPress={onPressAdd} style={styles.addButton}>
+                <Image source={require('../assets/images/add_icon.png')} style={styles.addImage}/>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -63,7 +70,8 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 20,
         paddingTop: 20,
-        paddingBottom: 20
+        paddingBottom: 20,
+        height: '100%'
     },
     searchView: {
         backgroundColor: '#FFFFFF',
@@ -78,14 +86,24 @@ const styles = StyleSheet.create({
     searchText: {
         marginLeft: 10,
         marginRight: 10,
-        color: '#333333'
+        color: '#c6c6c6'
     },
     searchImage: {
         width: 25,
-        height: 25
+        height: 25,
+        zIndex: 1
     },
     scrollView: {
         marginTop: 20
+    },
+    addButton: {
+        position: "absolute",
+        right: 25,
+        bottom: 25
+    },
+    addImage: {
+        width: 25,
+        height: 25
     },
     itemContiner: {
         paddingLeft: 6,
