@@ -4,7 +4,10 @@ import {
     GET_BOOKMARKS_ERROR,
     ADD_BOOKMARK_ERROR,
     ADD_BOOKMARK_REQUEST,
-    ADD_BOOKMARK_SUCCESS
+    ADD_BOOKMARK_SUCCESS,
+    DELETE_BOOKMARK_ERROR,
+    DELETE_BOOKMARK_REQUEST,
+    DELETE_BOOKMARK_SUCCESS
 } from '../actions/bookmarkActions';
 
 const INITIAL_STATE = {
@@ -16,32 +19,12 @@ const INITIAL_STATE = {
 
 export default (state=INITIAL_STATE, action) => {
     switch(action.type){
-        case GET_BOOKMARKS_REQUEST:
-            return {
-                ...state,
-                loading: true
-            };
-
         case GET_BOOKMARKS_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 hasError: false,
                 data: action.payload
-            };
-
-        case GET_BOOKMARKS_ERROR:
-            return {
-                ...state,
-                loading: false,
-                hasError: true,
-                error: action.payload
-            };
-
-        case ADD_BOOKMARK_REQUEST:
-            return {
-                ...state,
-                loading: true
             };
             
         case ADD_BOOKMARK_SUCCESS:
@@ -52,7 +35,25 @@ export default (state=INITIAL_STATE, action) => {
                 data: [action.payload, ...state.data]
             };
 
+        case DELETE_BOOKMARK_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                hasError: false,
+                data: state.data.filter(b => b.id != action.payload)
+            };
+
+        case GET_BOOKMARKS_REQUEST:
+        case ADD_BOOKMARK_REQUEST:
+        case DELETE_BOOKMARK_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+
+        case GET_BOOKMARKS_ERROR:
         case ADD_BOOKMARK_ERROR:
+        case DELETE_BOOKMARK_ERROR:
             return {
                 ...state,
                 loading: false,
