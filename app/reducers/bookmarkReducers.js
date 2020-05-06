@@ -7,7 +7,10 @@ import {
     ADD_BOOKMARK_SUCCESS,
     DELETE_BOOKMARK_ERROR,
     DELETE_BOOKMARK_REQUEST,
-    DELETE_BOOKMARK_SUCCESS
+    DELETE_BOOKMARK_SUCCESS,
+    UPDATE_BOOKMARK_REQUEST,
+    UPDATE_BOOKMARK_SUCCESS,
+    UPDATE_BOOKMARK_ERROR
 } from '../actions/bookmarkActions';
 
 const INITIAL_STATE = {
@@ -43,9 +46,19 @@ export default (state=INITIAL_STATE, action) => {
                 data: state.data.filter(b => b.id != action.payload)
             };
 
+        case UPDATE_BOOKMARK_SUCCESS:
+            const data = state.data.filter(b => b.id != action.payload.id)
+            return {
+                ...state,
+                loading: false,
+                hasError: false,
+                data: [action.payload, ...data]
+            };
+
         case GET_BOOKMARKS_REQUEST:
         case ADD_BOOKMARK_REQUEST:
         case DELETE_BOOKMARK_REQUEST:
+        case UPDATE_BOOKMARK_REQUEST:
             return {
                 ...state,
                 loading: true
@@ -54,6 +67,7 @@ export default (state=INITIAL_STATE, action) => {
         case GET_BOOKMARKS_ERROR:
         case ADD_BOOKMARK_ERROR:
         case DELETE_BOOKMARK_ERROR:
+        case UPDATE_BOOKMARK_ERROR:
             return {
                 ...state,
                 loading: false,

@@ -5,6 +5,7 @@ import { Bookmarks } from './Bookmarks';
 import { BookmarkPreview } from './BookmarkPreview';
 import { BookmarkSearch } from './BookmarkSearch';
 import { BookmarkAdd } from './BookmarkAdd';
+import { BookmarkUpdate } from './BookmarkUpdate';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ export function PageStack() {
                 <Stack.Screen name="BookmarkPreview" component={BookmarkPreview} />
                 <Stack.Screen name="BookmarkSearch" component={BookmarkSearch} />
                 <Stack.Screen name="BookmarkAdd" component={BookmarkAdd} />
+                <Stack.Screen name="BookmarkUpdate" component={BookmarkUpdate} />
             </Stack.Navigator>
         </NavigationContainer>
     );

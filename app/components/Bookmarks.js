@@ -16,7 +16,8 @@ export function Bookmarks(props) {
     const bookmarks = useSelector(state => state.bookmarks.data, shallowEqual);
     const dispatch = useDispatch();
     const [refreshing, setRefreshing] = useState(false);
-    const confirmDeleteAlert = (Id) =>
+    const confirmDeleteAlert = (bookmark, rowMap) => {
+        rowMap[bookmark.key].closeRow();
         Alert.alert(
             "",
             "Delete the selected bookmark?",
@@ -27,11 +28,16 @@ export function Bookmarks(props) {
                 },
                 {
                     text: "Delete",
-                    onPress: () => onPressDelete(Id)
+                    onPress: () => onPressDelete(bookmark.id)
                 }
             ],
             
         )
+    }
+
+    const onRowDidOpen = rowKey => {
+        console.log('This row opened', rowKey);
+    };
 
     useEffect(() => {
         getBookmarks(dispatch);
@@ -56,8 +62,11 @@ export function Bookmarks(props) {
         deleteBookmark(dispatch, Id);
     }
 
-    function onPressUpdate() {
-
+    function onPressUpdate(bookmark, rowMap) {
+        rowMap[bookmark.key].closeRow();
+        props.navigation.navigate('BookmarkUpdate', {
+            item: bookmark
+        });
     }
 
     const onRefresh = React.useCallback(() => {
@@ -81,16 +90,16 @@ export function Bookmarks(props) {
         </View>
     );
 
-    const renderHiddenItem = data => (
+    const renderHiddenItem = (data, rowMap) => (
         <View style={[styles.rowBack, styles.itemContiner]}>
             <TouchableOpacity
                 style={[styles.backRightBtn, styles.backRightBtnLeft]}
-                onPress={() => onPressUpdate(rowMap, data.item.id)}>
+                onPress={() => onPressUpdate(data.item, rowMap)}>
                 <Text style={styles.backTextWhite}>Update</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={[styles.backRightBtn, styles.backRightBtnRight]}
-                onPress={() => confirmDeleteAlert(data.item.id)}>
+                onPress={() => confirmDeleteAlert(data.item, rowMap)}>
                 <Text style={styles.backTextWhite}>Delete</Text>
             </TouchableOpacity>
         </View>
@@ -113,6 +122,7 @@ export function Bookmarks(props) {
                 renderHiddenItem={renderHiddenItem}
                 onRefresh={onRefresh}
                 refreshing={refreshing}
+                onRowDidOpen={onRowDidOpen}
             />
             <TouchableOpacity onPress={onPressAdd} style={styles.addButton}>
                 <Image source={require('../assets/images/add_icon.png')} style={styles.addImage}/>

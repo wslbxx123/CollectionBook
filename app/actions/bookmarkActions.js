@@ -9,7 +9,10 @@ export const ADD_BOOKMARK_ERROR = 'ADD_BOOKMARK_ERROR';
 export const DELETE_BOOKMARK_REQUEST = 'DELETE_BOOKMARK_REQUEST';
 export const DELETE_BOOKMARK_SUCCESS = 'DELETE_BOOKMARK_SUCCESS';
 export const DELETE_BOOKMARK_ERROR = 'DELETE_BOOKMARK_ERROR';
-const COLLECTION_API_ADDRESS = 'http://10.22.19.21';
+export const UPDATE_BOOKMARK_ERROR = 'UPDATE_BOOKMARK_ERROR';
+export const UPDATE_BOOKMARK_REQUEST = 'UPDATE_BOOKMARK_REQUEST';
+export const UPDATE_BOOKMARK_SUCCESS = 'UPDATE_BOOKMARK_SUCCESS';
+const COLLECTION_API_ADDRESS = 'http://10.22.19.38';
 
 const getBookmarksSuccess = payload => ({
     type: GET_BOOKMARKS_SUCCESS,
@@ -41,6 +44,16 @@ const deleteBookmarkSuccess = payload => ({
     payload
 });
 
+const updateBookmarkError = payload => ({
+    type: UPDATE_BOOKMARK_ERROR,
+    payload
+});
+
+const updateBookmarkSuccess = payload => ({
+    type: UPDATE_BOOKMARK_SUCCESS,
+    payload
+});
+
 export const getBookmarks = (dispatch) => {
     dispatch({type: GET_BOOKMARKS_REQUEST});
     return axios.get(`${COLLECTION_API_ADDRESS}/CollectionBookAPI/api/bookmark/GetBookmarks`).then(res => {
@@ -69,6 +82,16 @@ export const deleteBookmark = (dispatch, bookmarkId) => {
         dispatch(deleteBookmarkSuccess(bookmarkId));
     }).catch(error => {
         dispatch(deleteBookmarkError("Something went wrong!"));
+        return Promise.reject({});
+    })
+}
+
+export const updateBookmark = (dispatch, bookmark) => {
+    dispatch({type: UPDATE_BOOKMARK_REQUEST});
+    return axios.put(`${COLLECTION_API_ADDRESS}/CollectionBookAPI/api/bookmark/UpdateBookmark/${bookmark.id}`, bookmark).then(() => {
+        dispatch(updateBookmarkSuccess(bookmark));
+    }).catch(error => {
+        dispatch(updateBookmarkError("Something went wrong!"));
         return Promise.reject({});
     })
 }
