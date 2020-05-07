@@ -1,0 +1,1 @@
+export const COLLECTION_API_ADDRESS = 'http://192.168.2.247';

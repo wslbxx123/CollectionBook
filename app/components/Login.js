@@ -1,21 +1,34 @@
-import React, { Component, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     KeyboardAvoidingView,
     StyleSheet,
     TouchableWithoutFeedback,
     Keyboard,
     View,
-    Text,
     TextInput,
     Button
 } from 'react-native';
+import { login } from '../actions/userActions';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { Loading } from './Loading';
 
 export function Login(props) {
-    const [username, setUsername] = useState('');
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+    const ifLogin = useSelector(state => state.user.login, shallowEqual);
+    const loading = useSelector(state => state.user.loading, shallowEqual);
+
+    useEffect(() => {
+        if(ifLogin)
+            props.navigation.navigate('Bookmarks');
+    }, [ifLogin]);
 
     function onPressSubmit() {
-
+        const loginInfo = {
+            userName, password
+        };
+        login(dispatch, loginInfo);
     }
 
     return (
@@ -24,15 +37,17 @@ export function Login(props) {
             style={styles.container}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.inner}>
-                    <TextInput placeholder="Username" 
+                    <TextInput placeholder="User Name" 
                         style={styles.textInput}
-                        onChangeText={setUsername} />
+                        onChangeText={setUserName} />
                     <TextInput placeholder="Password" 
                         style={styles.textInput}
                         onChangeText={setPassword}
                         secureTextEntry={true} />
                     <View style={styles.btnContainer}>
-                        <Button title="Submit" onPress={onPressSubmit} />
+                        <Button title="Submit" 
+                            color="#58B9A1" 
+                            onPress={onPressSubmit} />
                     </View>
 
                     <View style={{ flex : 1 }} />

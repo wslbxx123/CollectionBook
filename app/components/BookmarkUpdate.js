@@ -41,7 +41,7 @@ export function BookmarkUpdate(props) {
     function onPressUpdate() {
         const bookmark = {
             title, description, tag, link, id: item.id
-        }
+        };
         updateBookmark(dispatch, bookmark).then(() => {
             props.navigation.navigate('Bookmarks', {
                 message: ""
@@ -56,7 +56,9 @@ export function BookmarkUpdate(props) {
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.inner}>
                         <View style={styles.addLinkView}>
-                            <Button color="#58B9A1" title="Extract" onPress={onPressExtract}/>
+                            <Button color="#58B9A1" 
+                                title="Extract" 
+                                onPress={onPressExtract}/>
                             <TextInput style={styles.linkText}
                                 onChangeText={setLink}
                                 placeholder="Copy link here"

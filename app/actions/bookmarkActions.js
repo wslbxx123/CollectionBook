@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { COLLECTION_API_ADDRESS } from '../utils/apiSetting'
+import { useSelector, shallowEqual } from 'react-redux';
 
 export const GET_BOOKMARKS_REQUEST = 'GET_BOOKMARKS_REQUEST';
 export const GET_BOOKMARKS_SUCCESS = 'GET_BOOKMARKS_SUCCESS';
@@ -12,7 +14,6 @@ export const DELETE_BOOKMARK_ERROR = 'DELETE_BOOKMARK_ERROR';
 export const UPDATE_BOOKMARK_ERROR = 'UPDATE_BOOKMARK_ERROR';
 export const UPDATE_BOOKMARK_REQUEST = 'UPDATE_BOOKMARK_REQUEST';
 export const UPDATE_BOOKMARK_SUCCESS = 'UPDATE_BOOKMARK_SUCCESS';
-const COLLECTION_API_ADDRESS = 'http://10.22.19.38';
 
 const getBookmarksSuccess = payload => ({
     type: GET_BOOKMARKS_SUCCESS,
