@@ -20,11 +20,15 @@ export function Login(props) {
     const loading = useSelector(state => state.user.loading, shallowEqual);
 
     useEffect(() => {
+        loading ? Loading.show() : Loading.hidden();
+
         if(ifLogin)
             props.navigation.navigate('Bookmarks');
-    }, [ifLogin]);
+    }, [loading]);
 
     function onPressSubmit() {
+        Loading.show();
+        
         const loginInfo = {
             userName, password
         };

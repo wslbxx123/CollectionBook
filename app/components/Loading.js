@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, ActivityIndicator, Dimensions, Button} from 'react-native'
+import {View, StyleSheet, ActivityIndicator, Dimensions} from 'react-native'
 import RootSiblings from 'react-native-root-siblings'
 const width = Dimensions.get('window').width
 const height = Dimensions.get('window').height
@@ -12,8 +12,7 @@ const Loading = {
     sibling = new RootSiblings(
       <View style={styles.maskStyle}>
         <View style={styles.backViewStyle}>
-          {/* <ActivityIndicator size="large" color="white" /> */}
-          <Button title="test"></Button>
+          <ActivityIndicator size="large" color="white" />
         </View>
       </View>
     );
@@ -21,7 +20,13 @@ const Loading = {
 
   hidden: ()=> {
     if (sibling instanceof RootSiblings) {
-      sibling.destroy()
+      sibling.update(<></>)
+      sibling.destroy();
+      sibling = undefined;
+      // sibling = new RootSiblings(
+      //   <>
+      //   </>
+      // );
     }
   }
 

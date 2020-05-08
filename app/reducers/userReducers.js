@@ -1,4 +1,5 @@
 import {
+    LOGIN_REQUEST,
     LOGIN_ERROR,
     LOGIN_SUCCESS
 } from '../actions/userActions';
@@ -26,6 +27,13 @@ export default (state=INITIAL_STATE, action) => {
                 login: false,
                 userInfo: null
             };
+
+        case LOGIN_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+
         default:
             return state;
     }

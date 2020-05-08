@@ -1,1 +1,1 @@
-export const COLLECTION_API_ADDRESS = 'http://192.168.2.247';
+export const COLLECTION_API_ADDRESS = 'http://10.22.16.21';
